@@ -1,0 +1,16 @@
+{
+    "name": "twitch-top-streams",
+    "description": "Twitch top 15 channels",
+    "author": "Sai Harsha Maddela",
+    "version": "1.0.0",
+    "license": "MIT",
+    "dependencies": {
+         "express": "^4.13.4",
+    	 "socket.io": "^1.4.4",
+         "request": "^2.67.0"
+    },
+    "repository": {
+  "type": "git",
+  "url": "https://github.com/h4r5h4/TwitchTopStreams.git"
+}
+}

@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+    
+</head>
+
+<body>
+    <p id="messages"></p>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var socket = io();
+      
+        socket.on('update', function(msg) {
+            $('#messages').text(msg);
+        });
+    </script>
+</body>
+
+</html>
