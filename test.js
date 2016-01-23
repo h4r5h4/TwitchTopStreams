@@ -4,7 +4,7 @@ var io = require('socket.io').listen(server);
 var request = require('request');
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '\\index.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 setInterval(function() {
