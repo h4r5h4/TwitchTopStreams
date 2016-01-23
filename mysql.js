@@ -49,7 +49,7 @@ var t = d.hhmmss();
 
 
 
-var pack = {date:n, time:t , twitch_id: 1234, name: 'Artour', viewer:count:256, position:10, game:"Dota 2" };
+var pack = {date:n, time:t , twitch_id: 1234, name: 'Artour', viewer_count:256, position:10, game:"Dota 2" };
 con.query('INSERT INTO TopChannels SET ?', pack, function(err,res){
   if(err) throw err;
 
