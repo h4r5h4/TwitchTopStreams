@@ -22,9 +22,11 @@ request('https://api.twitch.tv/kraken/streams?limit=15', function (error, respon
 
     //All is good. Print the body
     var parsedBody = JSON.parse(body)
-    var i;
+    var i,char = '';
     for(i in parsedBody.streams){
- io.emit('update', parsedBody.streams[i].channel.display_name + "," + parsedBody.streams[i].viewers + "," + parsedBody.streams[i].game);  }  
+    char += parsedBody.streams[i].channel.display_name + "," + parsedBody.streams[i].viewers + "," + parsedBody.streams[i].game + "<br>";
+   }  
+io.emit('update', char);
 //console.log(parsedBody.streams[i].channel.display_name + "," + parsedBody.streams[i].viewers + "," + parsedBody.streams[i].game); }// Show the HTML for the Modulus homepage.
 
 });
