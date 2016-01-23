@@ -26,13 +26,6 @@ con.end(function(err) {
    var yyyy = this.getFullYear().toString();
    var mm = (this.getMonth()+1).toString();
    var dd  = this.getDate().toString();
-   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
-  };
-
-   Date.prototype.yyyymmdd = function() {
-   var yyyy = this.getFullYear().toString();
-   var mm = (this.getMonth()+1).toString();
-   var dd  = this.getDate().toString();
    return yyyy + "-" + (mm>10?mm:"0"+mm) + "-" + (dd>10?dd:"0"+dd);
   };
  Date.prototype.hhmmss = function() {
@@ -46,7 +39,7 @@ d = new Date();
 var n = d.yyyymmdd();
 var t = d.hhmmss();
 
-
+console.log(t);
 
 
 var pack = {date:n, time:t , twitch_id: 1234, name: 'Artour', viewer_count:256, position:10, game:"Dota 2" };
