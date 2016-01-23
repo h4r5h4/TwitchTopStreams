@@ -39,7 +39,7 @@ con.end(function(err) {
    var hh = this.getHours().toString();
    var mm = this.getMinutes().toString();
    var ss  = this.getSeconds().toString();
-   return (hh>10?hh:"0"+hh) + "-" + (mm>10?mm:"0"+mm) + "-" + (ss>10?ss:"0"+ss);
+   return (hh>10?hh:"0"+hh) + ":" + (mm>10?mm:"0"+mm) + ":" + (ss>10?ss:"0"+ss);
   };
 
 d = new Date();
