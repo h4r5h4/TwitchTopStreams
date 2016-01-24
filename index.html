@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Socket.IO chat</title>
+    <title>Top Twitch Channels</title>
     
 </head>
 
@@ -14,7 +14,10 @@
         var socket = io();
       
         socket.on('update', function(msg) {
-            $('#messages').text(msg);
+            $('#messages').html(msg);
+        });
+        socket.on('new conn', function(msg) {
+            $('#messages').html(msg);
         });
     </script>
 </body>
