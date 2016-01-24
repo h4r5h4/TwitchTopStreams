@@ -1,22 +1,154 @@
 <html>
+
 <head>
     <title>Top Twitch Channels</title>
+    <style>
+        .Table {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            box-shadow: 10px 10px 5px #888888;
+            border: 1px solid #000000;
+            -moz-border-radius-bottomleft: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            -moz-border-radius-topright: 10px;
+            -webkit-border-top-right-radius: 10px;
+            border-top-right-radius: 10px;
+            -moz-border-radius-topleft: 10px;
+            -webkit-border-top-left-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+        .Table table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+        .Table tr:last-child td:last-child {
+            -moz-border-radius-bottomright: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .Table table tr:first-child td:first-child {
+            -moz-border-radius-topleft: 10px;
+            -webkit-border-top-left-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+        .Table table tr:first-child td:last-child {
+            -moz-border-radius-topright: 10px;
+            -webkit-border-top-right-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .Table tr:last-child td:first-child {
+            -moz-border-radius-bottomleft: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .Table tr:hover td {
+            background-color: #ffffff;
+        }
+        .Table td {
+            vertical-align: middle;
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            border-width: 0px 1px 1px 0px;
+            text-align: left;
+            padding: 9px;
+            font-size: 10px;
+            font-family: Arial;
+            font-weight: normal;
+            color: #000000;
+        }
+        .Table tr:last-child td {
+            border-width: 0px 1px 0px 0px;
+        }
+        .Table tr td:last-child {
+            border-width: 0px 0px 1px 0px;
+        }
+        .Table tr:last-child td:last-child {
+            border-width: 0px 0px 0px 0px;
+        }
+        .Table tr:first-child td {
+            background: -o-linear-gradient(bottom, #000000 5%, #000000 100%);
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #000000), color-stop(1, #000000));
+            background: -moz-linear-gradient( center top, #000000 5%, #000000 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#000000", endColorstr="#000000");
+            background: -o-linear-gradient(top, #000000, 000000);
+            background-color: #000000;
+            border: 0px solid #000000;
+            text-align: center;
+            border-width: 0px 0px 1px 1px;
+            font-size: 14px;
+            font-family: Arial;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .Table tr:first-child:hover td {
+            background: -o-linear-gradient(bottom, #000000 5%, #000000 100%);
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #000000), color-stop(1, #000000));
+            background: -moz-linear-gradient( center top, #000000 5%, #000000 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#000000", endColorstr="#000000");
+            background: -o-linear-gradient(top, #000000, 000000);
+            background-color: #000000;
+        }
+        .Table tr:first-child td:first-child {
+            border-width: 0px 0px 1px 0px;
+        }
+        .Table tr:first-child td:last-child {
+            border-width: 0px 0px 1px 1px;
+        }
+    </style>
 </head>
+
 <body>
-    <p id="list"></p>
+    <div class="Table">
+        <table id="RankTable">
+            <tr>
+                <td>Name</td>
+                <td>Viewers</td>
+                <td>Game</td>
+                <td>Rank</td>
+            </tr>
+        </table>
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
         var socket = io();
         //Receiving periodic updates
         socket.on('update', function(pack) {
-            $('#list').html(pack); //update new content
+            drawTable(JSON.parse(pack)); //update new content
         });
 
         //Update page on connection
         socket.on('new conn', function(pack) {
-            $('#list').html(pack);
+            drawTable(JSON.parse(pack));
         });
+
+        function drawTable(data) {
+            $("#RankTable tr:gt(0)").remove();
+            for (var i = 0; i < 15; i++) {
+                drawRow(data.channels[i]);
+            }
+        }
+
+        function drawRow(rowData) {
+
+            var row = $("<tr>")
+            $("#RankTable").append(row);
+            row.append($("<td>" + rowData.name + "</td>"));
+            row.append($("<td>" + rowData.viewers + "</td>"));
+            row.append($("<td>" + rowData.game + "</td>"));
+            row.append($("<td>" + rowData.position + "</td>"));
+            row.append($("</tr>"))
+        }
     </script>
 </body>
+
 </html>

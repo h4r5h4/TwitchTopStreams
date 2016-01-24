@@ -16,7 +16,7 @@ var con = mysql.createConnection({
 //Remote logging
 var winston = require('winston');
 require('winston-loggly');
- 
+
  winston.add(winston.transports.Loggly, {
     token: "5a214ed6-e600-43f1-a299-de5e19ef8101",
     subdomain: "h4r5h4",
@@ -60,13 +60,14 @@ setInterval(function() {
         var n = d.yyyymmdd();
         var t = d.hhmmss();
         var parsedBody = JSON.parse(body)
-        finalBody = '';
+        finalBody = '{\"channels\":[';
 
         //Iterating through the JSON Object
         for (var i = 0; i < 15; i++) {
             var pos = parseInt(i + 1)
             var vCount = parsedBody.streams[i].viewers;
             var cName = parsedBody.streams[i].channel.name;
+            var dName = parsedBody.streams[i].channel.display_name;
             var gName = parsedBody.streams[i].game;
             var pack = {
                 date: n,
@@ -83,9 +84,11 @@ setInterval(function() {
 
                 //console.log('Last insert ID:', res.insertId);
             });
-            finalBody += cName + " - " + vCount + " - " + gName + "<br>";
+            finalBody += "{\"name\":\"" + dName + "\", \"viewers\":" + vCount + ", \"game\":\"" + gName + "\", \"position\":" + pos + "}";
+            if(pos!=15)
+            finalBody += ",";
         }
-
+        finalBody += "]}";
         //Sending data to all connected clients
         io.emit('update', finalBody);
     });
