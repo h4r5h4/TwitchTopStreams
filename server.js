@@ -24,9 +24,6 @@ require('winston-loggly');
     json:true
 });
 
-winston.log('info',"Hello World from Node.js!");
-
-
 //Function to get Current Date in MySQL Date format
 Date.prototype.yyyymmdd = function() {
     var yyyy = this.getFullYear().toString();
