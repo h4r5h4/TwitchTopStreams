@@ -13,6 +13,19 @@ var con = mysql.createConnection({
     database: "vulcun"
 });
 
+//Remote logging
+var winston = require('winston');
+require('winston-loggly');
+ 
+ winston.add(winston.transports.Loggly, {
+    token: "5a214ed6-e600-43f1-a299-de5e19ef8101",
+    subdomain: "h4r5h4",
+    tags: ["Winston-NodeJS"],
+    json:true
+});
+
+winston.log('info',"Hello World from Node.js!");
+
 
 //Function to get Current Date in MySQL Date format
 Date.prototype.yyyymmdd = function() {
@@ -41,10 +54,10 @@ setInterval(function() {
 //Fetch Data from Twitch API
     request('https://api.twitch.tv/kraken/streams?limit=15', function(error, response, body) {
         if (error) {
-            return console.log('Error:', error);
+           winston.log('Request Error:', error);
         }
         if (response.statusCode !== 200) {
-            return console.log('Invalid Status Code Returned:', response.statusCode);
+           winston.log('Invalid Status Code Returned:', response.statusCode);
         }
         d = new Date();
         var n = d.yyyymmdd();
