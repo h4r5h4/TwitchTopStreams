@@ -6,7 +6,7 @@ Live Preview
 
 http://52.71.247.188/
 
-Channels are update every 60 seconds
+Channels are updated every 60 seconds
 
 Packages Needed are express, mysql, request and socket.io
 
