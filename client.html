@@ -3,21 +3,21 @@
 
 <head>
     <title>Top Twitch Channels</title>
-    
 </head>
 
 <body>
-    <p id="messages"></p>
+    <p id="list"></p>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
         var socket = io();
-      
-        socket.on('update', function(msg) {
-            $('#messages').html(msg);
+
+        socket.on('update', function(pack) {
+            $('#list').html(pack);
+
         });
-        socket.on('new conn', function(msg) {
-            $('#messages').html(msg);
+        socket.on('new conn', function(pack) {
+            $('#list').html(pack);
         });
     </script>
 </body>

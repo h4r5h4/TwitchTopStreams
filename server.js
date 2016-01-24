@@ -3,7 +3,7 @@ var server = require('http').createServer(app).listen(process.env.PORT || 80);
 var io = require('socket.io').listen(server);
 var request = require('request');
 var mysql = require("mysql");
-var char = '';
+var finalBody = '';
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -47,23 +47,24 @@ request('https://api.twitch.tv/kraken/streams?limit=15', function (error, respon
     var n = d.yyyymmdd();
     var t = d.hhmmss();
     var parsedBody = JSON.parse(body)
-    char = '';
+    finalBody = '';
     for(var i=0;i<15;i++){
       var pos = parseInt(i+1)
-      console.log(pos);
-      var pack = {date:n, time:t, viewer_count:parsedBody.streams[i].viewers, name: parsedBody.streams[i].channel.name,game:parsedBody.streams[i].game, position:pos};
+      var vCount = parsedBody.streams[i].viewers;
+      var cName = parsedBody.streams[i].channel.name;
+      var gName = parsedBody.streams[i].game;
+      var pack = {date:n, time:t, viewer_count: vCount, name:cName,game:gName, position:pos};
       con.query('INSERT INTO TopChannels SET ?', pack, function(err,res){
         if(err) throw err;
       
-        console.log('Last insert ID:', res.insertId);
+        //console.log('Last insert ID:', res.insertId);
       });
-    char += parsedBody.streams[i].channel.name + "," + parsedBody.streams[i].viewers + "," + parsedBody.streams[i].game + "<br>";
+    finalBody += cName + " - " + vCount + " - " + gName + "<br>";
    }
-io.emit('update', char);
+io.emit('update', finalBody);
 });
-}, 60000);
+}, 5000);
 
 io.on('connection', function(socket){
-  socket.emit('new conn', char);
-  //console.log(char);
+  socket.emit('new conn', finalBody);
 });
