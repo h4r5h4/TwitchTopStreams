@@ -1,25 +1,22 @@
-<!doctype html>
 <html>
-
 <head>
     <title>Top Twitch Channels</title>
 </head>
-
 <body>
     <p id="list"></p>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
         var socket = io();
-
+        //Receiving periodic updates
         socket.on('update', function(pack) {
-            $('#list').html(pack);
-
+            $('#list').html(pack); //update new content
         });
+
+        //Update page on connection
         socket.on('new conn', function(pack) {
             $('#list').html(pack);
         });
     </script>
 </body>
-
 </html>
