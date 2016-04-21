@@ -9,8 +9,8 @@ var finalBody = '';
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "rockerz",
-    database: "vulcun"
+    password: "password",
+    database: "db"
 });
 
 //Remote logging
@@ -18,7 +18,7 @@ var winston = require('winston');
 require('winston-loggly');
 
  winston.add(winston.transports.Loggly, {
-    token: "5a214ed6-e600-43f1-a299-de5e19ef8101",
+    token: "winston token",
     subdomain: "h4r5h4",
     tags: ["Winston-NodeJS"],
     json:true
